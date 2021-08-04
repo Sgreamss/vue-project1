@@ -1,7 +1,6 @@
 <template>
   <div>
       <nav class="nav">
-          welcome
         <img src="../assets/logo250.png" width="100" height="100" style="margin-top: -10px">
         <button class="pushable" type="submit">
             <span class="front" style="font-family: 'Acme', sans-serif;">log out</span>
@@ -16,7 +15,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .nav{
     background-color: #5E17EB;
     height: 10%;
