@@ -6,10 +6,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/main">Home</a>
+              <a class="nav-link" href="/main">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/board">Score Board</a>
+              <a class="nav-link active" aria-current="page" href="/board">Score Board</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/profile">Profile</a>
