@@ -9,12 +9,12 @@
             <p class="fsize" style="font-family: 'Acme', sans-serif;">Log in to collect points, redeem rewards.</p><br>
           <div class="blockInput">
             <label class="label">
-            <input  name="username" type="text" class="input" placeholder="username or email" style="font-family: 'Acme', sans-serif;">
+            <input  name="username" type="text" class="input" v-model="form.email" placeholder="username or email" style="font-family: 'Acme', sans-serif;">
             </label>
           </div>
           <div class="blockInput">
             <label class="label">
-            <input  name="password" type="password" class="input" placeholder="password" style="font-family: 'Acme', sans-serif;">
+            <input  name="password" type="password" class="input" v-model="form.password" placeholder="password" style="font-family: 'Acme', sans-serif;">
             </label>
           </div>
           <div class="blockButton">
@@ -50,7 +50,12 @@ export default {
     async login(){
       console.log(this.form)
       let res = await AuthService.login(this.form)
-      console.log(res)
+      if(res.success){
+        this.$router.push('/main')
+      }
+      else{
+        alert(res.message)
+      }
     },
   },
 }
