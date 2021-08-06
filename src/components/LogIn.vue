@@ -51,10 +51,11 @@ export default {
       console.log(this.form)
       let res = await AuthService.login(this.form)
       if(res.success){
+        this.$swal("Login Success",`Welcome, ${res.user.username}`,"success")
         this.$router.push('/main')
       }
       else{
-        alert(res.message)
+        this.$swal("Login Failed",res.message,"error")
       }
     },
   },

@@ -46,10 +46,10 @@ export default {
             }
         }catch(e){
             if (e.response.status === 400){
-                console.error(e.response.data.message[0].message[0].message)
+                
                 return{
                     success: false,
-                    message: e.response.data.message[0].message[0].message,
+                    message: e.response.data.message[0].messages[0].message,
                 }
             }
             else{
@@ -64,7 +64,7 @@ export default {
     },
 
     logout(){
-
+        localStorage.removeItem(auth_key)
     },
 
     register(){
