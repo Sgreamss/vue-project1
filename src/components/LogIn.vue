@@ -18,7 +18,7 @@
             </label>
           </div>
           <div class="blockButton">
-            <button class="pushable" type="submit" style="font-family: 'Acme', sans-serif;">
+            <button class="pushable" type="submit" @click="login" style="font-family: 'Acme', sans-serif;" >
               <span class="front">SIGN IN</span>
             </button>
           </div>
@@ -36,9 +36,25 @@
 
 
 <script>
+import AuthService from "@/services/AuthService"
 export default {
-
+  data() {
+    return{
+      form: {
+        email: "",
+        password: "",
+      },
+    }
+  },
+  methods:{
+    async login(){
+      console.log(this.form)
+      let res = await AuthService.login(this.form)
+      console.log(res)
+    },
+  },
 }
+
 </script>
 
 <style scoped>

@@ -14,9 +14,15 @@ export default {
 
     async login({ email, password }){
         try{
-            let res
+            let url = api_endpoint+ '/auth/local'
+            let body = {
+                identifier: email,
+                password: password
+            }
+            let res = await Axios.post(url, body)
+            console.log(res)
         }catch(e){
-
+            console.error(e)
         }
     },
 
@@ -24,7 +30,7 @@ export default {
 
     },
 
-    register({ username, email, password }){
+    register(){
 
     }
 }
