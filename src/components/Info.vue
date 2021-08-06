@@ -14,7 +14,7 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
             </li>
-            <button class="pushable" type="submit">
+            <button class="pushable" type="submit" @click="logout">
               <span class="front" style="font-family: 'Acme', sans-serif;">LOG OUT</span>
             </button>
           </ul>
@@ -25,8 +25,23 @@
 </template>
 
 <script>
+import AuthService from '@/services/AuthService'
 export default {
-
+  methods:{
+    logout(){
+      
+      this.$swal("You really wanna leave?",":(",{ icon:"warning",buttons:{cancel:"Nooo",Yes:true}, }).then(
+        (logout) =>{
+          if(logout){
+            AuthService.logout()
+            
+            this.$swal("Logout Success","You can comeback anytime :)","success")
+            this.$router.push('/')
+          }
+        })
+    
+    },
+  },
 }
 </script>
 
