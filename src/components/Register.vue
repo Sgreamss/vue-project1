@@ -9,26 +9,26 @@
           <p class="fsize" style="font-family: 'Acme', sans-serif;">CREATE YOUR ACCOUNT</p>
           <div class="blockInput">
             <label class="label">
-            <input name="email" type="text" class="input" placeholder="email" style="font-family: 'Acme', sans-serif;">
+            <input name="email" type="text" class="input" placeholder="email" v-model="form.email" style="font-family: 'Acme', sans-serif;">
             </label>
           </div>
           <div class="blockInput">
             <label class="label">
-            <input  name="username" type="text" class="input" placeholder="username" style="font-family: 'Acme', sans-serif;">
+            <input  name="username" type="text" class="input" placeholder="username" v-model="form.username" style="font-family: 'Acme', sans-serif;">
             </label>
           </div>
           <div class="blockInput">
             <label class="label">
-            <input  name="password" type="password" class="input" placeholder="password" style="font-family: 'Acme', sans-serif;">
+            <input  name="password" type="password" class="input" placeholder="password" v-model="form.password" style="font-family: 'Acme', sans-serif;">
             </label>
           </div>
-          <div class="blockInput">
+          <!-- <div class="blockInput">
             <label class="label">
             <input  name="confirm" type="confirmPassword" class="input" placeholder="confirm password" style="font-family: 'Acme', sans-serif;">
             </label>
-          </div>
+          </div> -->
           <div class="blockButton">
-            <button class="pushable" type="submit">
+            <button class="pushable" type="submit" @click="register" >
               <span class="front" style="font-family: 'Acme', sans-serif;">SUBMIT</span>
             </button>
           </div>
@@ -46,8 +46,30 @@
 
 
 <script>
+import AuthService from '@/services/AuthService'
 export default {
-
+  data(){
+    return{
+      form:{
+        email:"",
+        username:"",
+        password:"",
+      }
+    }
+  },
+  methods:{
+    async register(){
+      console.log(this.form)
+      let res = await AuthService.register(this.form)
+      if(res.success){
+        this.$swal("Register Success",`Welcome, ${res.user.username}`,"success")
+        this.$router.push('/main')
+      }
+      else{
+        this.$swal("Register Failed",res.message,"error")
+      }
+    },
+  }
 }
 </script>
 
