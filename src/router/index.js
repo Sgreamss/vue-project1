@@ -6,6 +6,7 @@ import SignIn from '../views/SignIn'
 import Main from '../views/Main'
 import Board from '../views/Board'
 import Profile from '../views/Profile'
+import quiz from '@/views/quiz'
 
 Vue.use(VueRouter)
 
@@ -14,6 +15,11 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home
+    },
+    {
+        path: '/quiz',
+        name: 'quiz',
+        component: quiz
     },
     {
         path: '/signUp',
