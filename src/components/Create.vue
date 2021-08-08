@@ -165,10 +165,14 @@ export default {
     },
 
     addTopic(topic) {
+      if(topic!=''){
       let payload = {
         title: topic,
       }
       Topic.dispatch('addTopic', payload)
+      }else{
+          this.$swal("Submit failed","please fill topic data returning to main menu","error")
+      }
     },
 
     setQuestion() {
@@ -195,8 +199,12 @@ export default {
     },
 
     async submit() {
+      
+      
       if (this.topic == -1) {
+        
         this.addTopic(this.newTopic)
+        
         await this.fetchTopic()
         for (let topic of this.topics) {
           if (topic.title == this.newTopic) {
@@ -207,6 +215,7 @@ export default {
       console.log(this.questions);
       console.log(this.topic);
       
+      if((this.form.questionText!='')&&(this.form.answerText1!='')&&(this.form.answerText2!='')&&(this.form.answerText3!='')&&(this.form.answerText4!='')){
       for (let i = 0; i < this.questions.length; i++) {
         this.questions[i].topic = {
           id: this.topic
@@ -214,6 +223,9 @@ export default {
         Question.dispatch('addQuestion', this.questions[i])
       }
       this.$router.push('/admin')
+      }else{
+        this.$swal("Submit failed","please fill all the data","error")
+      }
     },
 
     exit(){

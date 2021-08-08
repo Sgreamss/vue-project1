@@ -21,12 +21,25 @@
         </div>
       </div>
     </nav>
+    <div>
+      <p>Username : {{ username }}</p>
+      <p>Email    : {{ email }}</p>
+      <p>Point    : {{ point }}</p>
+    </div>
   </div>
 </template>
 
 <script>
 import AuthService from '@/services/AuthService'
 export default {
+  data(){
+    return{
+      username:'',
+      email:'',
+      point:0,
+    }
+  },
+  
   methods:{
     logout(){
       
