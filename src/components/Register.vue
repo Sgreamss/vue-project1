@@ -22,11 +22,11 @@
             <input  name="password" type="password" class="input" placeholder="password" v-model="form.password" style="font-family: 'Acme', sans-serif;">
             </label>
           </div>
-          <!-- <div class="blockInput">
+          <div class="blockInput">
             <label class="label">
             <input  name="confirm" type="confirmPassword" class="input" placeholder="confirm password" style="font-family: 'Acme', sans-serif;">
             </label>
-          </div> -->
+          </div>
           <div class="blockButton">
             <button class="pushable" type="submit" @click="register" >
               <span class="front" style="font-family: 'Acme', sans-serif;">SUBMIT</span>
