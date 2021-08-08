@@ -4,7 +4,7 @@
 
 นายกฤษดา   เลขะสันต์     6110450014\
 นายศุภกร    ตันกายา      6110450367\
-นายวิชญ์พล  กอตระกูลสิน   6110450324\
+นายวิชญ์พล  กอตระกูลสิน   6110450324
 
 ## Project setup
 ```
@@ -21,10 +21,4 @@ npm run serve
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
