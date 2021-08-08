@@ -25,14 +25,14 @@ export default new Vuex.Store({
     },
 
     actions: {
-        async fetchTopic({commit}) {
-            let res = await Axios.get(api_endpoint + "/topics")
+        async fetchQuestion({commit}) {
+            let res = await Axios.get(api_endpoint + "/questions")
             console.log('axi ' + res);
             commit("fetch", {res})
         },
 
-        async addTopic({commit}, payload){
-            let res = await Axios.post(api_endpoint + "/topics", payload)
+        async addQuestion({commit}, payload){
+            let res = await Axios.post(api_endpoint + "/questions", payload)
             console.log('axi ' + res);
             commit("add", {payload})
         }

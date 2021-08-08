@@ -4,10 +4,11 @@ import Home from '../views/Home.vue'
 import SignUp from '../views/SignUp'
 import SignIn from '../views/SignIn'
 import Main from '../views/Main'
+import Admin from '../views/Admin'
 import Board from '../views/Board'
 import Profile from '../views/Profile'
 import Quiz from '../views/Quiz'
-import Admin from '../views/Admin'
+import Creator from '../views/Creator'
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,11 @@ const routes = [
         path: '/quiz',
         name: 'Quiz',
         component: Quiz
+    },
+    {
+        path: '/creator',
+        name: 'Creator',
+        component: Creator
     },
     {
         path: '/board',

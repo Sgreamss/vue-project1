@@ -35,7 +35,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .app {
   text-align: center;
   color: wheat;
@@ -55,7 +55,6 @@ export default {
   right: 20px;
 }
 .pushable {
-    background: hsl(340deg 100% 32%);
     border-radius: 12px;
     border: none;
     padding: 0;
@@ -68,7 +67,6 @@ export default {
     padding: 8px 20px;
     border-radius: 12px;
     font-size: 1.25rem;
-    background: hsl(345deg 100% 47%);
     color: white;
     transform: translateY(-6px);
     background-color: #FF914D;

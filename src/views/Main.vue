@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bg">
         <m></m>
     </div> 
 </template>
@@ -14,5 +14,7 @@ export default {
 </script>
 
 <style scoped>
-
+.bg {
+    height: 100vh;
+}
 </style>

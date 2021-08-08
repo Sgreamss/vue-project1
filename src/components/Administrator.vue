@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bg">
     <nav class="navbar navbar-expand-lg navbar-dark nav fsize" style="font-family: 'Acme', sans-serif;">
       <div class="container-fluid">
         <img src="../assets/logo250.png" width="80px" height="80px" alt="logo">
@@ -21,16 +21,14 @@
         </div>
       </div>
     </nav>
-    <div class="libBlock">
-        <div class="item">
-            <div class="bf" v-for="tp in topics" :key="tp.id">
-                <div  v-if="tp.id == 1">
-                    <div class="ifont">
-                        {{tp.id}} Questions
-                    </div>
-                </div>
-            </div>
-            <div class="but">
+    <div class="libBlock" v-for="tp in topics" :key="tp.id">
+      <div class="item">
+          <div class="bf">
+              <div class="ifont">
+                    {{ tp.questions.length }} Questions
+              </div>
+          </div>
+          <div class="but">
                 <button class="edit bgD" type="delete" style="font-family: 'Acme', sans-serif;">
                   DELETE
                 </button>
@@ -38,14 +36,11 @@
                   EDIT
                 </button>
             </div>
-            <div class="titleBlock" v-for="tp in topics" :key="tp.id">
-              <div v-if="tp.id == 1">
-                {{tp.title}}
-              </div>
-            </div>
+          <div class="titleBlock">
+              {{tp.title}}
+          </div>
         </div>
-    </div>
-
+      </div>
   </div>
 </template>
 
@@ -81,7 +76,6 @@ export default {
         (logout) =>{
           if(logout){
             AuthService.logout()
-            
             this.$swal("Logout Success","You can comeback anytime :)","success")
             this.$router.push('/')
           }
@@ -93,6 +87,9 @@ export default {
 </script>
 
 <style scoped>
+.bg{
+  background-color: #EEEEEE;
+}
 .nav{
     background-color: #5E17EB;
     position: sticky;
@@ -115,6 +112,7 @@ export default {
 }
 .libBlock{
     border-radius: 4px;
+    background-color: white;
     border: 2px solid rgb(255, 255, 255);
     margin: 1rem 0px 0px;
     box-shadow: rgb(0 0 0 / 15%) 0px 2px 4px 0px;

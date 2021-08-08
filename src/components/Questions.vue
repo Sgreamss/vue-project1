@@ -13,11 +13,6 @@
         <div v-if="top.id == 2">
             <div v-for="quiz in top.questions" :key="quiz.id">
                 <div v-if="quiz.id == 2">
-                    <div v-for="image in quiz.image" :key="image.id">
-                        <div v-if="image.id == 1">
-                            <img :src="getImage(image)"  alt="" class="img">    
-                        </div>
-                    </div>
                     <div v-for="ans in quiz.answerOptions" :key="ans.id">
                       <button class="pushable" type="submit">
                         <span class="front" style="font-family: 'Acme', sans-serif;">{{ (quiz.answerOptions.indexOf(ans) + '.' + ans.answerText + " ")}}</span>
@@ -50,10 +45,6 @@ export default {
       this.topics = Topic.getters.topics
     },
 
-    getImage(image){
-        return "http://localhost:1337" + image.formats.medium.url
-    },
-
     logout(){
       this.$swal("You really wanna leave?",":(",{ icon:"warning",buttons:{cancel:"Nooo",Yes:true}, }).then(
         (logout) =>{
@@ -79,15 +70,11 @@ export default {
     height: 12vh;
 }
 .fsize{
+    text-align: center;
     margin-top: 2vh;
     font-size: 25px;
-    text-align: center;
 }
-.hFont{
-    line-height: 3em;
-    text-align: center;
-    color: #5E17EB;
-}
+
 .header{
     display: inline-block;
     white-space: nowrap;
@@ -116,10 +103,7 @@ export default {
     outline-offset: 4px;
     background-color: #DC7C41;
     width: 20%;
-    position: absolute;
-    top: 30%;
-    right: 10px;
-    
+    top: 50%;
 }
 .front {
     display: block;
