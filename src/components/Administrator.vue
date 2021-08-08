@@ -6,13 +6,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/main">Home</a>
+              <a class="nav-link active" aria-current="page" href="/admin">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/board">Score Board</a>
+              <a class="nav-link" href="/creator">Create</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/profile">Profile</a>
+              <a class="nav-link" href="/board">Score board</a>
             </li>
             <button class="pushable" type="submit" @click="logout">
               <span class="front" style="font-family: 'Acme', sans-serif;">LOG OUT</span>
@@ -21,36 +21,31 @@
         </div>
       </div>
     </nav>
-    <div>
-      <h1 class="hFont" style="font-family: 'Acme', sans-serif;" >
-        CHOOSE THE TOPIC OF THE QUESTIONS
-      </h1>
-      <div class="menuBlock" v-for="top in topics" :key="top.id">
+    <div class="libBlock">
         <div class="item">
-          
+            <div class="bf" v-for="tp in topics" :key="tp.id">
+                <div  v-if="tp.id == 1">
+                    <div class="ifont">
+                        {{tp.id}} Questions
+                    </div>
+                </div>
+            </div>
+            <div class="but">
+                <button class="edit bgD" type="delete" style="font-family: 'Acme', sans-serif;">
+                  DELETE
+                </button>
+                <button class="edit bgE" type="edit" style="font-family: 'Acme', sans-serif;">
+                  EDIT
+                </button>
+            </div>
+            <div class="titleBlock" v-for="tp in topics" :key="tp.id">
+              <div v-if="tp.id == 1">
+                {{tp.title}}
+              </div>
+            </div>
         </div>
-      </div>
-      <!-- <table>
-        <thead>
-          <tr>
-            <th>No. |</th>
-            <th>Questions |</th>
-            <th>answer id |</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="qs in questions" :key="qs.id">
-            <td></td>
-            <td>{{ qs.questionText }}</td>
-            <td>
-              <span v-for="ans in qs.answerOptions" :key="ans.id">
-                {{ (qs.answerOptions.indexOf(ans) + 1) + '.' + ans.answerText + " "}}
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table> -->
     </div>
+
   </div>
 </template>
 
@@ -118,14 +113,50 @@ export default {
     line-height: 70px;
     padding: 1px 9px 0;
 }
-.menuBlock{
-    margin: 0 1%;
-    text-align: center;
+.libBlock{
+    border-radius: 4px;
+    border: 2px solid rgb(255, 255, 255);
+    margin: 1rem 0px 0px;
+    box-shadow: rgb(0 0 0 / 15%) 0px 2px 4px 0px;
+    box-sizing: border-box;
+    width: 100%;
 }
 .item{
-  width: 15.5%;
-  display: inline-block;
-  margin: 15px 0;
+    display: flex;
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.bf{
+    justify-content: space-between;
+    display: flex;
+}
+.ifont{
+    display: flex;
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+}.titleBlock{
+    background-color: rgb(242, 242, 242);
+    color: rgb(110, 110, 110);
+    margin-left: 2px;
+    padding: 3px;
+    margin-top: 2px;
+    display: flex;
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.but{
+    flex-flow: row-reverse wrap;
+    display: flex;
 }
 .pushable {
     border-radius: 12px;
@@ -134,7 +165,6 @@ export default {
     cursor: pointer;
     outline-offset: 4px;
     background-color: #DC7C41;
-    width: 8%;
     position: absolute;
     top: 30%;
     right: 10px;
@@ -150,8 +180,32 @@ export default {
     background-color: #FF914D;  
 }
 
+
 .pushable:active .front {
   transform: translateY(-2px);
 }
 
+.edit{
+    width: initial;
+    margin: 0 0.5rem;
+    border: 0px;
+    cursor: pointer;
+    vertical-align: bottom;
+    color: rgb(255, 255, 255);
+    border-radius: 4px;
+    font-size: 15px;
+    text-align: center;
+    height: 32px;
+    padding: 0px 16px 4px;
+    line-height: 32px;
+    min-width: 80px
+}
+
+.bgE{
+  background: #5E17EB;
+}
+
+.bgD{
+  background-color: #0072FF 
+}
 </style>

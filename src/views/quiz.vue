@@ -1,13 +1,15 @@
 <template>
-  <div>
-      <question></question>
-  </div>
+    <div>
+        <questions></questions>
+    </div>
 </template>
 
 <script>
-import Question from '../components/quizes.vue'
+import Questions from '../components/Questions.vue'
 export default {
-    components:{Question}
+    components: {
+        Questions
+    }
 }
 </script>
 

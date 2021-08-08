@@ -6,7 +6,8 @@ import SignIn from '../views/SignIn'
 import Main from '../views/Main'
 import Board from '../views/Board'
 import Profile from '../views/Profile'
-import quiz from '@/views/quiz'
+import Quiz from '../views/Quiz'
+import Admin from '../views/Admin'
 
 Vue.use(VueRouter)
 
@@ -15,11 +16,6 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Home
-    },
-    {
-        path: '/quiz',
-        name: 'quiz',
-        component: quiz
     },
     {
         path: '/signUp',
@@ -35,6 +31,16 @@ const routes = [
         path: '/main',
         name: 'Main',
         component: Main
+    },
+    {
+        path: '/admin',
+        name: 'Admin',
+        component: Admin
+    },
+    {
+        path: '/quiz',
+        name: 'Quiz',
+        component: Quiz
     },
     {
         path: '/board',
