@@ -10,6 +10,7 @@ import Profile from '../views/Profile'
 import Quiz from '../views/Quiz'
 import EditQuestion from '../views/EditQuestion'
 import Creator from '../views/Creator'
+import Reward from '@/views/Reward'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ const routes = [
         path: '/signUp',
         name: 'SignUp',
         component: SignUp
+    },
+    {
+        path: '/reward',
+        name: 'Reward',
+        component: Reward
     },
     {
         path: '/signIn',
