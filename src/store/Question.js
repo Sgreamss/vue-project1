@@ -21,8 +21,11 @@ export default new Vuex.Store({
         },
         add(state, {payload}) {
             state.data.push(payload)
+        },
+        delete(state, {payload}){
+            state.data.push(payload)
         }
-    },
+    }, 
 
     actions: {
         async fetchQuestion({commit}) {
@@ -32,6 +35,12 @@ export default new Vuex.Store({
         },
 
         async addQuestion({commit}, payload){
+            let res = await Axios.post(api_endpoint + "/questions", payload)
+            console.log('axi ' + res);
+            commit("add", {payload})
+        },
+
+        async deleteQuestion({commit, payload}){
             let res = await Axios.post(api_endpoint + "/questions", payload)
             console.log('axi ' + res);
             commit("add", {payload})

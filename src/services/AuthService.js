@@ -67,6 +67,35 @@ export default {
         localStorage.removeItem(auth_key)
     },
 
+    async update(id, body) {
+        console.log(id, body);
+        try{
+            let url = api_endpoint+'/users/'+id
+            let res = await Axios.put(url, body, {
+                headers: {
+                    'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('auth-login')).jwt
+                }
+            })
+            return res
+        }catch(e){
+            if (e.response.status === 400){
+                
+                return{
+                    success: false,
+                    message: e.response.data.message[0].messages[0].message,
+                }
+            }
+            else{
+                console.error(e.response)
+                return{
+                    success : false,
+                    message : "Unknown error: "+ e.response
+                }
+            }
+
+        }
+    },
+
     async register({ username, email, password}){
         try{
             let url = api_endpoint+ '/auth/local/register'
@@ -110,4 +139,5 @@ export default {
             
         }
     }
+
 }

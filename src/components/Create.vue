@@ -30,10 +30,6 @@
       <div class="row" style="min-height: 100vh">
         <div class="col-2">
           <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 100%; height: 100%;">
-            <!-- <div class="mb-3">
-              <label for="formGroupExampleInput" class="form-label">Topic</label>
-              <input type="text" class="form-control" placeholder="Enter a topic title" v-model="form.title">
-            </div> -->
             <label class="form-label">Topic</label>
             <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="topic">
               <option v-for="topic in topics" :key="topic.id" :value="topic.id">{{ topic.title }}</option>
@@ -117,9 +113,9 @@
 </template>
 
 <script>
-import Topic from '../services/Topic'
-import Question from '../services/Question'
-import User from '../services/User'
+import Topic from '../store/Topic'
+import Question from '../store/Question'
+import User from '../store/User'
 export default {
   data() {
     return {
@@ -169,11 +165,12 @@ export default {
 
     addTopic(topic) {
       if(topic!=''){
-      let payload = {
-        title: topic,
+        let payload = {
+          title: topic,
+        }
+        Topic.dispatch('addTopic', payload)
       }
-      Topic.dispatch('addTopic', payload)
-      }else{
+      else {
           this.$swal("Submit failed","please fill topic data returning to main menu","error")
       }
     },
@@ -201,13 +198,9 @@ export default {
       this.clearForm()
     },
 
-    async submit() {
-      
-      
+    async submit() {   
       if (this.topic == -1) {
-        
         this.addTopic(this.newTopic)
-        
         await this.fetchTopic()
         for (let topic of this.topics) {
           if (topic.title == this.newTopic) {
@@ -219,15 +212,16 @@ export default {
       console.log(this.topic);
       
       if((this.form.questionText!='')&&(this.form.answerText1!='')&&(this.form.answerText2!='')&&(this.form.answerText3!='')&&(this.form.answerText4!='')){
-      for (let i = 0; i < this.questions.length; i++) {
-        this.questions[i].topic = {
-          id: this.topic
+        for (let i = 0; i < this.questions.length; i++) {
+          this.questions[i].topic = {
+            id: this.topic
+          }
+          Question.dispatch('addQuestion', this.questions[i])
         }
-        Question.dispatch('addQuestion', this.questions[i])
+        this.$router.push('/admin')
       }
-      this.$router.push('/admin')
-      }else{
-        this.$swal("Submit failed","please fill all the data","error")
+      else{
+          this.$swal("Submit failed","please fill all the data","error")
       }
     },
 

@@ -6,7 +6,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" :href="me.user.id === 2 ? '/admin' : '/main'">Home</a>
+              <a class="nav-link" href="/admin">Home</a>
             </li>
             <div v-if="me.user.id===2">
               <li class="nav-item">
@@ -15,9 +15,6 @@
             </div>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/board">Score Board</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/profile">Profile</a>
             </li>
             <button class="pushable" type="submit" @click="logout">
               <span class="front" style="font-family: 'Acme', sans-serif;">LOG OUT</span>
@@ -37,11 +34,10 @@
       </thead>
       <tbody>
         <tr v-for="(n, index) in users" :key="index">
-          <td>{{ index + 1 }}</td>
-          <td>{{ n.username }}</td>
-          <td>{{ n.point }}</td>
-          <div class="change_color" >
-            <td v-if="me.user.username === n.username">{{ "-----YOU ARE HERE!!!-----" }}</td>
+          <div v-if="n.role.name !== 'Admin'">
+            <td>{{ index + 1}}</td>
+            <td>{{ n.username }}</td>
+            <td>{{ n.point }}</td>
           </div>
         </tr>
       </tbody>
@@ -52,7 +48,7 @@
 
 <script>
 import AuthService from '@/services/AuthService'
-import User from '@/services/User'
+import User from '../store/User'
 export default {
   data(){
     return{

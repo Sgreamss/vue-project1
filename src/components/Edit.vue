@@ -1,59 +1,63 @@
 <template>
   <div class="bg">
-    <nav class="navbar navbar-expand-lg navbar-dark nav fsize" style="font-family: 'Acme', sans-serif;">
-      <div class="container-fluid">
-        <img src="../assets/logo250.png" width="80px" height="80px" alt="logo">
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/main">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/profile">Profile</a>
-            </li>
-            <button class="pushable" type="submit" @click="logout">
-              <span class="front" style="font-family: 'Acme', sans-serif;">LOG OUT</span>
-            </button>
-          </ul>
+        <nav class="navbar navbar-expand-lg navbar-dark nav fsize" style="font-family: 'Acme', sans-serif;">
+        <div class="container-fluid">
+            <img src="../assets/logo250.png" width="80px" height="80px" alt="logo">
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/admin">Home</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/creator">Create</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/board">Score board</a>
+                </li>
+                <button class="pushable" type="submit" @click="logout">
+                <span class="front" style="font-family: 'Acme', sans-serif;">LOG OUT</span>
+                </button>
+            </ul>
+            </div>
         </div>
-      </div>
-    </nav>
-    <div>
-    <h1 class="hFont" style="font-family: 'Acme', sans-serif;" >
-      CHOOSE THE TOPIC OF THE QUESTIONS
-    </h1>
-    <div class="libBlock" v-for="tp in topics" :key="tp.id">
-      <div class="item">
-          <div class="bf">
-              <div class="ifont">
-                    {{ tp.questions.length }} Questions
-              </div>
-          </div>
-          <div class="but" id="topic">
-              <button class="start" type="start" @click="start(tp.id)" style="font-family: 'Acme', sans-serif;">
-                START
-              </button>
-          </div>
-          <div class="titleBlock">
-              {{tp.title}}
+        </nav>
+        <div v-for="tp in topics" :key="tp.id">
+          <div v-if="tp.id == 2">
+            <div class="libBlock" v-for="qs in tp.questions" :key="qs.id">
+              <div class="item">
+                  <div class="bf">
+                      <div class="ifont">
+                            {{ qs.questionText }}
+                      </div>
+                  </div>
+                  <div class="but">
+                        <button class="edit" type="edit" style="font-family: 'Acme', sans-serif;" @click="deleteQuestion">
+                          DELETE
+                        </button>
+                    </div>
+                  <div class="titleBlock">
+                      {{tp.title}}
+                  </div>
+                </div>
+            </div>
           </div>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
 import AuthService from '@/services/AuthService'
-// import TopicService from '@/services/TopicService'
 import Topic from '../store/Topic'
+import Question from '../store/Question'
 export default {
   data() {
     return {
       topics: [],
+      form: {
+        id: 3
+      }
     }
   },
-
 
   created() {
     this.fetchTopic()
@@ -65,40 +69,34 @@ export default {
       this.topics = Topic.getters.topics
     },
 
-    fetchStorage(){
-      this.users = JSON.parse(localStorage.getItem('auth-login'));
-    },
-
-    async start(id){
-      localStorage.TopicId = id;
-      this.$router.push('/quiz')
-    },
-
     logout(){
       this.$swal("You really wanna leave?",":(",{ icon:"warning",buttons:{cancel:"Nooo",Yes:true}, }).then(
         (logout) =>{
           if(logout){
             AuthService.logout()
-            
             this.$swal("Logout Success","You can comeback anytime :)","success")
             this.$router.push('/')
           }
         })
-    
     },
+
+    async deleteQuestion(){
+      await Question.dispatch('deleteQuestion', this.form)
+      console.log(this.form);
+    }
   },
 }
 </script>
 
 <style scoped>
+.bg{
+  background-color: #EEEEEE;
+}
 .nav{
     background-color: #5E17EB;
     position: sticky;
     top: 0;
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 5%), inset 0 -1px 0 rgb(0 0 0 / 15%);
-}
-.bg{
-  background-color: #EEEEEE;
 }
 .fsize{
     font-size: 25px;
@@ -160,22 +158,6 @@ export default {
     flex-flow: row-reverse wrap;
     display: flex;
 }
-.start{
-    width: initial;
-    margin: 0 0.5rem;
-    border: 0px;
-    cursor: pointer;
-    vertical-align: bottom;
-    background: #5E17EB;
-    color: rgb(255, 255, 255);
-    border-radius: 4px;
-    font-size: 15px;
-    text-align: center;
-    height: 32px;
-    padding: 0px 16px 4px;
-    line-height: 32px;
-    min-width: 80px
-}
 .pushable {
     border-radius: 12px;
     border: none;
@@ -183,7 +165,6 @@ export default {
     cursor: pointer;
     outline-offset: 4px;
     background-color: #DC7C41;
-    width: 8%;
     position: absolute;
     top: 30%;
     right: 10px;
@@ -199,8 +180,27 @@ export default {
     background-color: #FF914D;  
 }
 
+
 .pushable:active .front {
   transform: translateY(-2px);
 }
+
+.edit{
+    width: initial;
+    margin: 0 0.5rem;
+    border: 0px;
+    cursor: pointer;
+    vertical-align: bottom;
+    color: rgb(255, 255, 255);
+    border-radius: 4px;
+    font-size: 15px;
+    text-align: center;
+    height: 32px;
+    padding: 0px 16px 4px;
+    line-height: 32px;
+    min-width: 80px;
+    background: #5E17EB;
+}
+
 
 </style>

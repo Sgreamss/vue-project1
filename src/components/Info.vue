@@ -6,15 +6,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" :href="users.user.id === 2 ? '/admin' : '/main'">Home</a>
+              <a class="nav-link" href="/main">Home</a>
             </li>
-            <div v-if="users.user.id===2">
               <li class="nav-item">
               <a class="nav-link" href="/creator">Create</a>
-            </li>
-            </div>
-            <li class="nav-item">
-              <a class="nav-link" href="/board">Score Board</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
@@ -26,10 +21,10 @@
         </div>
       </div>
     </nav>
-    <div>
-      <p>Username : {{ users.user.username }}</p>
-      <p>Email    : {{ users.user.email }}</p>
-      <p>Point    : {{ users.user.point }}</p>
+    <div >
+      <p>Username : {{ users.username }}</p>
+      <p>Email    : {{ users.email }}</p>
+      <p>Point    : {{ users.point }}</p>
     </div>
   </div>
 </template>

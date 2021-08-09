@@ -23,7 +23,11 @@ export default new Vuex.Store({
 
     actions: {
         async fetchUser({commit}) {
-            let res = await Axios.get(api_endpoint + "/users")
+            let res = await Axios.get(api_endpoint + "/users", {
+                headers: {
+                    'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('auth-login')).jwt
+                }
+            })
             console.log('axi ' + res);
             commit("fetch", {res})
         }

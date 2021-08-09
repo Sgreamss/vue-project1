@@ -1,37 +1,53 @@
 <template>
-  <div>
-    <nav class="nav fsize" style="font-family: 'Acme', sans-serif;">
-        <div v-for="top in topics" :key="top.id" class="fsize">
-            <div v-if="top.id == 2">
-                <div v-for="quiz in top.questions" :key="quiz.id"> 
-                    <h1 v-if="quiz.id == 2">{{ quiz.questionText }}</h1>
-                </div>
-            </div>
+  <div class="bg">
+    <nav class="navbar navbar-expand-lg navbar-dark nav fsize" style="font-family: 'Acme', sans-serif;">
+      <div class="container-fluid">
+        <img src="../assets/logo250.png" width="80px" height="80px" alt="logo">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="/main">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">Profile</a>
+            </li>
+            <button class="pushable" type="submit" @click="logout">
+              <span class="front" style="font-family: 'Acme', sans-serif;">LOG OUT</span>
+            </button>
+          </ul>
         </div>
+      </div>
     </nav>
-    <div v-for="top in topics" :key="top.id" class="fsize">
-        <div v-if="top.id == 2">
-            <div v-for="quiz in top.questions" :key="quiz.id">
-                <div v-if="quiz.id == 2">
-                    <div v-for="ans in quiz.answerOptions" :key="ans.id">
-                      <button class="pushable" type="submit">
-                        <span class="front" style="font-family: 'Acme', sans-serif;">{{ (quiz.answerOptions.indexOf(ans) + '.' + ans.answerText + " ")}}</span>
-                      </button>
-                    </div>
-                </div>
+
+    <div>
+      <div v-for="question in topic.questions" :key="question.id">
+          <h1>
+            {{question.questionText}}
+          </h1>
+            <div class="form-check" v-for="ans in question.answerOptions" :key="ans.id">
+                <input class="form-check-input" type="radio" :name="question.id" :value="ans.id" v-model="question.selectedAnswer">
+                <label class="form-check-label" for="exampleRadios1">{{ans.answerText}}</label>
             </div>
-        </div>
-    </div>    
+      </div>
+    </div>
+
+    <button class="pushableS">
+        <span class="frontS" style="font-family: 'Acme', sans-serif;" @click="submit">SUBMIT</span>
+    </button>
   </div>
 </template>
 
 <script>
 import AuthService from '@/services/AuthService'
-import Topic from '../services/Topic'
+import Topic from '../store/Topic'
+// import User from '../store/User'
+
+
 export default {
   data() {
     return {
-      topics: []
+      topic: [],
+      user: []
     }
   },
 
@@ -41,8 +57,28 @@ export default {
 
   methods:{
     async fetchTopic(){
-      await Topic.dispatch("fetchTopic")
-      this.topics = Topic.getters.topics
+      await Topic.dispatch("fetchTopicById", localStorage.TopicId)
+      this.topic = Topic.getters.topics
+    },
+
+    submit(){
+      let score = 0;
+      for(let question of this.topic.questions){
+        let correctedId = -1
+        for(let answer of question.answerOptions){
+          if(answer.isCorrect){
+            correctedId = answer.id
+          }
+        }
+        if(question.selectedAnswer == correctedId){
+          score += 1
+        }
+        console.log(score);
+      }
+      let payload = {
+        point: score
+      }
+      AuthService.update( JSON.parse(localStorage.getItem('auth-login')).user.id, payload)
     },
 
     logout(){
@@ -55,46 +91,121 @@ export default {
             this.$router.push('/')
           }
         })
-    
     },
-  },
+  }
+
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .nav{
-    background-color: white;
+    background-color: #5E17EB;
     position: sticky;
     top: 0;
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 5%), inset 0 -1px 0 rgb(0 0 0 / 15%);
-    height: 12vh;
+}
+.bg{
+  background-color: #EEEEEE;
 }
 .fsize{
-    text-align: center;
-    margin-top: 2vh;
     font-size: 25px;
 }
-
+.hFont{
+    line-height: 3em;
+    text-align: center;
+    color: #5E17EB;
+}
 .header{
     display: inline-block;
     white-space: nowrap;
     line-height: 70px;
     padding: 1px 9px 0;
 }
-.menuBlock{
-    margin: 0 1%;
-    text-align: center;
+.libBlock{
+    border-radius: 4px;
+    background-color: white;
+    border: 2px solid rgb(255, 255, 255);
+    margin: 1rem 0px 0px;
+    box-shadow: rgb(0 0 0 / 15%) 0px 2px 4px 0px;
+    box-sizing: border-box;
+    width: 100%;
 }
 .item{
-  width: 15.5%;
-  display: inline-block;
-  margin: 15px 0;
+    display: flex;
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
 }
-.img{
+.bf{
+    justify-content: space-between;
+    display: flex;
+}
+.ifont{
+    display: flex;
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+}.titleBlock{
+    background-color: rgb(242, 242, 242);
+    color: rgb(110, 110, 110);
+    margin-left: 2px;
+    padding: 3px;
+    margin-top: 2px;
+    display: flex;
+    box-sizing: border-box;
+    margin: 0px;
+    min-width: 0px;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.but{
+    flex-flow: row-reverse wrap;
+    display: flex;
+}
+.start{
+    width: initial;
+    margin: 0 0.5rem;
+    border: 0px;
+    cursor: pointer;
+    vertical-align: bottom;
+    background: #5E17EB;
+    color: rgb(255, 255, 255);
+    border-radius: 4px;
+    font-size: 15px;
+    text-align: center;
+    height: 32px;
+    padding: 0px 16px 4px;
+    line-height: 32px;
+    min-width: 80px
+}
+
+.pushableS {
+    border-radius: 12px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 4px;
+    background-color: #DC7C41;
+    width: 8%;
+
+
+    
+}
+.frontS {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    padding: 8px 20px;
+    border-radius: 12px;
+    font-size: 1.25rem;
+    color: white ;
+    transform: translateY(-6px);
+    background-color: #FF914D;  
 }
+
 .pushable {
     border-radius: 12px;
     border: none;
@@ -102,8 +213,11 @@ export default {
     cursor: pointer;
     outline-offset: 4px;
     background-color: #DC7C41;
-    width: 20%;
-    top: 50%;
+    width: 8%;
+    position: absolute;
+    top: 30%;
+    right: 10px;
+    
 }
 .front {
     display: block;
@@ -115,7 +229,8 @@ export default {
     background-color: #FF914D;  
 }
 
-.pushable:active .front {
+.pushable:active .front
+.pushableS:active .frontS {
   transform: translateY(-2px);
 }
 
