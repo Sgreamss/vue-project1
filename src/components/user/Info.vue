@@ -22,9 +22,9 @@
       </div>
     </nav>
     <div >
-      <p>Username : {{ user.username }}</p>
-      <p>Email    : {{ user.email }}</p>
-      <p>Point    : {{ user.point }}</p>
+      <p>Username : {{ user.user.username }}</p>
+      <p>Email    : {{ user.user.email }}</p>
+      <p>Point    : {{ user.user.point }}</p>
     </div>
   </div>
 </template>

@@ -6,13 +6,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="/main">Home</a>
+              <a class="nav-link" href="/admin">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/profile">Profile</a>
+              <a class="nav-link" aria-current="page" href="/creator">Create</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/editReward">Reward</a>
+              <a class="nav-link" href="/board">Score board</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/editReward">Reward</a>
             </li>
             <button class="pushable" type="submit" @click="logout">
               <span class="front" style="font-family: 'Acme', sans-serif;">LOG OUT</span>

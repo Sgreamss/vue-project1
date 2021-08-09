@@ -9,7 +9,7 @@
                 <a class="nav-link active" aria-current="page" href="/admin">Home</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="/creator">Create</a>
+                <a class="nav-link active" href="/creator">Create</a>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" href="/board">Score board</a>

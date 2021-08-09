@@ -80,6 +80,8 @@ export default {
         point: score
       }
       AuthService.update( JSON.parse(localStorage.getItem('auth-login')).user.id, payload)
+      this.$swal("Congratulation",`You got ${payload.point} score`,"success")
+      this.$router.push('/main')
     },
 
     logout(){
