@@ -22,9 +22,9 @@
       </div>
     </nav>
     <div>
-      <p>Username : {{ username }}</p>
-      <p>Email    : {{ email }}</p>
-      <p>Point    : {{ point }}</p>
+      <p>Username : {{ users.user.username }}</p>
+      <p>Email    : {{ users.user.email }}</p>
+      <p>Point    : {{ users.user.point }}</p>
     </div>
   </div>
 </template>
@@ -34,13 +34,17 @@ import AuthService from '@/services/AuthService'
 export default {
   data(){
     return{
-      username:'',
-      email:'',
-      point:0,
+      users:null
     }
+  },
+  created(){
+    this.fetchStorage()
   },
   
   methods:{
+    fetchStorage(){
+      this.users = JSON.parse(localStorage.getItem('auth-login'));
+    },
     logout(){
       
       this.$swal("You really wanna leave?",":(",{ icon:"warning",buttons:{cancel:"Nooo",Yes:true}, }).then(

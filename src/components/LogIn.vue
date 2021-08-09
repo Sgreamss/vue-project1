@@ -9,7 +9,7 @@
             <p class="fsize" style="font-family: 'Acme', sans-serif;">Log in to collect points, redeem rewards.</p><br>
           <div class="blockInput">
             <label class="label">
-            <input  name="username" type="text" class="input" v-model="form.email" placeholder="username or email" style="font-family: 'Acme', sans-serif;">
+            <input  name="username" type="text" class="input" v-model="form.email" placeholder="username or email" autocomplete="off" style="font-family: 'Acme', sans-serif;">
             </label>
           </div>
           <div class="blockInput">

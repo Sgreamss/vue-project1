@@ -9,12 +9,12 @@
           <p class="fsize" style="font-family: 'Acme', sans-serif;">CREATE YOUR ACCOUNT</p>
           <div class="blockInput">
             <label class="label">
-            <input name="email" type="text" class="input" placeholder="email" v-model="form.email" style="font-family: 'Acme', sans-serif;">
+            <input name="email" type="text" class="input" placeholder="email" autocomplete="off" v-model="form.email" style="font-family: 'Acme', sans-serif;">
             </label>
           </div>
           <div class="blockInput">
             <label class="label">
-            <input  name="username" type="text" class="input" placeholder="username" v-model="form.username" style="font-family: 'Acme', sans-serif;">
+            <input  name="username" type="text" class="input" placeholder="username" autocomplete="off" v-model="form.username" style="font-family: 'Acme', sans-serif;">
             </label>
           </div>
           <div class="blockInput">
