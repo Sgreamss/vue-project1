@@ -8,6 +8,7 @@ import Admin from '../views/Admin'
 import Board from '../views/Board'
 import Profile from '../views/Profile'
 import Quiz from '../views/Quiz'
+import EditQuestion from '../views/EditQuestion'
 import Creator from '../views/Creator'
 
 Vue.use(VueRouter)
@@ -37,6 +38,11 @@ const routes = [
         path: '/admin',
         name: 'Admin',
         component: Admin
+    },
+    {
+        path: '/editQuestion',
+        name: 'EditQuestion',
+        component: EditQuestion
     },
     {
         path: '/quiz',

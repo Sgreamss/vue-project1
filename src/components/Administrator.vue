@@ -14,9 +14,6 @@
             <li class="nav-item">
               <a class="nav-link" href="/board">Score board</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/profile">Profile</a>
-            </li>
             <button class="pushable" type="submit" @click="logout">
               <span class="front" style="font-family: 'Acme', sans-serif;">LOG OUT</span>
             </button>
@@ -32,10 +29,7 @@
               </div>
           </div>
           <div class="but">
-                <button class="edit bgD" type="delete" style="font-family: 'Acme', sans-serif;">
-                  DELETE
-                </button>
-                <button class="edit bgE" type="edit" style="font-family: 'Acme', sans-serif;">
+                <button class="edit" type="edit" style="font-family: 'Acme', sans-serif;" @click="edit(tp.id)">
                   EDIT
                 </button>
             </div>
@@ -49,8 +43,8 @@
 
 <script>
 import AuthService from '@/services/AuthService'
-import Topic from '../services/Topic'
-import User from '../services/User'
+import Topic from '../store/Topic'
+import User from '../store/User'
 export default {
   data() {
     return {
@@ -72,6 +66,11 @@ export default {
     async fetchUser(){
       await User.dispatch("fetchUser")
       this.users = User.getters.users
+    },
+
+    async edit(id){
+      localStorage.TopicId = id;
+      this.$router.push('/editQuestion')
     },
 
     logout(){
@@ -199,14 +198,9 @@ export default {
     height: 32px;
     padding: 0px 16px 4px;
     line-height: 32px;
-    min-width: 80px
+    min-width: 80px;
+    background: #5E17EB;
 }
 
-.bgE{
-  background: #5E17EB;
-}
 
-.bgD{
-  background-color: #0072FF 
-}
 </style>

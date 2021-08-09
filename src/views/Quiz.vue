@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <questions></questions>
+    <div class=".bg">
+        <questions></questions>    
     </div>
 </template>
 
@@ -14,5 +14,8 @@ export default {
 </script>
 
 <style>
+.bg {
+    height: 100vh;
+}
 
 </style>
