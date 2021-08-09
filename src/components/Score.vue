@@ -34,11 +34,10 @@
       </thead>
       <tbody>
         <tr v-for="(n, index) in users" :key="index">
-          <td>{{ index + 1 }}</td>
-          <td>{{ n.username }}</td>
-          <td>{{ n.point }}</td>
-          <div class="change_color" >
-            <td v-if="me.user.username === n.username">{{ "-----YOU ARE HERE!!!-----" }}</td>
+          <div v-if="n.role.name !== 'Admin'">
+            <td>{{ index + 1}}</td>
+            <td>{{ n.username }}</td>
+            <td>{{ n.point }}</td>
           </div>
         </tr>
       </tbody>

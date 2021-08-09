@@ -24,7 +24,7 @@
           </div>
           <div class="blockInput">
             <label class="label">
-            <input  name="confirm" type="confirmPassword" class="input" placeholder="confirm password" style="font-family: 'Acme', sans-serif;">
+            <input  name="confirm" type="Password" class="input" placeholder="confirm password" style="font-family: 'Acme', sans-serif;">
             </label>
           </div>
           <div class="blockButton">
