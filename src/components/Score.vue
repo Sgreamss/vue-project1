@@ -21,13 +21,53 @@
         </div>
       </div>
     </nav>
+    <div>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Username</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(n, index) in users" :key="index">
+          <td>{{ index + 1 }}</td>
+          <td>{{ n.username }}</td>
+          <td>{{ n.point }}</td>
+          <div class="change_color" >
+            <td v-if="me.user.username === n.username">{{ "-----YOU ARE HERE!!!-----" }}</td>
+          </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   </div>
 </template>
 
 <script>
 import AuthService from '@/services/AuthService'
+import User from '@/services/User'
 export default {
+  data(){
+    return{
+      users:null,
+      me:null
+    }
+  },
+  created() {
+    this.fetchUser()
+    this.fetchStorage()
+  },
+
   methods:{
+    async fetchUser(){
+      await User.dispatch("fetchUser")
+      this.users = User.getters.users
+    },
+    fetchStorage(){
+      this.me = JSON.parse(localStorage.getItem('auth-login'));
+    },
     logout(){
       
       this.$swal("You really wanna leave?",":(",{ icon:"warning",buttons:{cancel:"Nooo",Yes:true}, }).then(
@@ -46,6 +86,13 @@ export default {
 </script>
 
 <style scoped>
+.change_color{
+  color:red
+}
+.styled-table {
+    margin: 25px 0;
+    min-width: 400px;
+}
 .nav{
     background-color: #5E17EB;
     position: sticky;
