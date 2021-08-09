@@ -14,6 +14,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/board">Score board</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/profile">Profile</a>
+            </li>
             <button class="pushableE">
               <span class="frontE" style="font-family: 'Acme', sans-serif;" @click="exit">EXIT</span>
             </button>

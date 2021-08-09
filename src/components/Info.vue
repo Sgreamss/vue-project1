@@ -8,6 +8,11 @@
             <li class="nav-item">
               <a class="nav-link" :href="users.user.id === 2 ? '/admin' : '/main'">Home</a>
             </li>
+            <div v-if="users.user.id===2">
+              <li class="nav-item">
+              <a class="nav-link" href="/creator">Create</a>
+            </li>
+            </div>
             <li class="nav-item">
               <a class="nav-link" href="/board">Score Board</a>
             </li>

@@ -8,6 +8,11 @@
             <li class="nav-item">
               <a class="nav-link" :href="me.user.id === 2 ? '/admin' : '/main'">Home</a>
             </li>
+            <div v-if="me.user.id===2">
+              <li class="nav-item">
+              <a class="nav-link" href="/creator">Create</a>
+            </li>
+            </div>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/board">Score Board</a>
             </li>
