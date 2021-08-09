@@ -31,7 +31,7 @@
                       </div>
                   </div>
                   <div class="but">
-                        <button class="edit" type="edit" style="font-family: 'Acme', sans-serif;" @click="deleteQuestion">
+                        <button class="edit" type="edit" style="font-family: 'Acme', sans-serif;" @click="deleteQuestion(qs)">
                           DELETE
                         </button>
                     </div>
@@ -53,9 +53,6 @@ export default {
   data() {
     return {
       topics: [],
-      form: {
-        id: 3
-      }
     }
   },
 
@@ -80,9 +77,9 @@ export default {
         })
     },
 
-    async deleteQuestion(){
-      await Question.dispatch('deleteQuestion', this.form)
-      console.log(this.form);
+    async deleteQuestion(question){
+      await Question.dispatch('deleteQuestion', question)
+      this.fetchTopic()
     }
   },
 }

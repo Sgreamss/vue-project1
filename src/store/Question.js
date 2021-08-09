@@ -23,13 +23,13 @@ export default new Vuex.Store({
             state.data.push(payload)
         },
         delete(state, {payload}){
-            state.data.push(payload)
+            state.data.pop(payload)
         }
     }, 
 
     actions: {
         async fetchQuestion({commit}) {
-            let res = await Axios.get(api_endpoint + "/questions")
+            let res = await Axios.get(api_endpoint + "/questions", )
             console.log('axi ' + res);
             commit("fetch", {res})
         },
@@ -40,10 +40,14 @@ export default new Vuex.Store({
             commit("add", {payload})
         },
 
-        async deleteQuestion({commit, payload}){
-            let res = await Axios.post(api_endpoint + "/questions", payload)
+        async deleteQuestion({commit}, payload){
+            let res = await Axios.delete(api_endpoint + "/questions/" + payload.id, {
+                headers: {
+                    'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('auth-login')).jwt
+                }
+            })
             console.log('axi ' + res);
-            commit("add", {payload})
+            commit("delete", {payload})
         }
     },
 })
