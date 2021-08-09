@@ -1,14 +1,15 @@
 <template>
     <div class="bg">
-        <edit></edit>
+        <m></m>
     </div> 
 </template>
 
 <script>
-import Edit from '../components/Edit.vue'
+import M from '../../components/user/Menu.vue'
 export default {
+
     components: {
-        Edit
+        M
     }
 }
 </script>

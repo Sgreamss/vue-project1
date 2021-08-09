@@ -1,76 +1,71 @@
 <template>
   <div class="bg">
-    <nav class="navbar navbar-expand-lg navbar-dark nav fsize" style="font-family: 'Acme', sans-serif;">
-      <div class="container-fluid">
-        <img src="../assets/logo250.png" width="80px" height="80px" alt="logo">
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/admin">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/creator">Create</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/board">Score board</a>
-            </li>
-            <button class="pushable" type="submit" @click="logout">
-              <span class="front" style="font-family: 'Acme', sans-serif;">LOG OUT</span>
-            </button>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <div class="libBlock" v-for="tp in topics" :key="tp.id">
-      <div class="item">
-          <div class="bf">
-              <div class="ifont">
-                    {{ tp.questions.length }} Questions
-              </div>
-          </div>
-          <div class="but">
-                <button class="edit" type="edit" style="font-family: 'Acme', sans-serif;" @click="edit(tp.id)">
-                  EDIT
+        <nav class="navbar navbar-expand-lg navbar-dark nav fsize" style="font-family: 'Acme', sans-serif;">
+        <div class="container-fluid">
+            <img src="../../assets/logo250.png" width="80px" height="80px" alt="logo">
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/admin">Home</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/creator">Create</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="/board">Score board</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/editReward">Reward</a>
+                </li>
+                <button class="pushable" type="submit" @click="logout">
+                <span class="front" style="font-family: 'Acme', sans-serif;">LOG OUT</span>
                 </button>
+            </ul>
             </div>
-          <div class="titleBlock">
-              {{tp.title}}
-          </div>
         </div>
-      </div>
-  </div>
+        </nav>
+        <div v-for="qs in topic.questions" :key="qs.id">
+            <div class="libBlock">
+              <div class="item">
+                  <div class="bf">
+                      <div class="ifont">
+                            {{ qs.questionText }}
+                      </div>
+                  </div>
+                  <div class="but">
+                        <button class="edit" type="edit" style="font-family: 'Acme', sans-serif;" @click="deleteQuestion(qs)">
+                          DELETE
+                        </button>
+                    </div>
+                  <div class="titleBlock">
+                    {{topic.title}}
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 import AuthService from '@/services/AuthService'
-import Topic from '../store/Topic'
-import User from '../store/User'
+import Topic from '../../store/Topic'
+import Question from '../../store/Question'
 export default {
   data() {
     return {
-      topics: [],
-      users: []
+      topic: [],
     }
   },
 
   created() {
     this.fetchTopic()
-    this.fetchUser()
   },
 
   methods:{
     async fetchTopic(){
-      await Topic.dispatch("fetchTopic")
-      this.topics = Topic.getters.topics
-    },
-    async fetchUser(){
-      await User.dispatch("fetchUser")
-      this.users = User.getters.users
-    },
-
-    async edit(id){
-      localStorage.TopicId = id;
-      this.$router.push('/editQuestion')
+      await Topic.dispatch("fetchTopicById", localStorage.TopicId)
+      this.topic = Topic.getters.topics
+      this.fetchTopic()
     },
 
     logout(){
@@ -82,8 +77,12 @@ export default {
             this.$router.push('/')
           }
         })
-    
     },
+
+    async deleteQuestion(question){
+      await Question.dispatch('deleteQuestion', question)
+      console.log(this.form);
+    }
   },
 }
 </script>

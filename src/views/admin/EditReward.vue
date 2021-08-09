@@ -1,15 +1,14 @@
 <template>
     <div class="bg">
-        <m></m>
+        <edit-reward></edit-reward>
     </div> 
 </template>
 
 <script>
-import M from '../components/Menu.vue'
+import EditReward from '../../components/admin/EditReward.vue'
 export default {
-
     components: {
-        M
+        EditReward
     }
 }
 </script>

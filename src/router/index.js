@@ -3,14 +3,15 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import SignUp from '../views/SignUp'
 import SignIn from '../views/SignIn'
-import Main from '../views/Main'
-import Admin from '../views/Admin'
-import Board from '../views/Board'
-import Profile from '../views/Profile'
-import Quiz from '../views/Quiz'
-import EditQuestion from '../views/EditQuestion'
-import Creator from '../views/Creator'
-import Reward from '@/views/Reward'
+import Main from '../views/user/Main'
+import Admin from '../views/admin/Admin'
+import Board from '../views/admin/Board'
+import Profile from '../views/user/Profile'
+import Quiz from '../views/user/Quiz'
+import EditQuestion from '../views/admin/EditQuestion'
+import Creator from '../views/admin/Creator'
+import Rewards from '../views/user/RedeemReward'
+import EditReward from '../views/admin/EditReward'
 
 Vue.use(VueRouter)
 
@@ -26,9 +27,9 @@ const routes = [
         component: SignUp
     },
     {
-        path: '/reward',
-        name: 'Reward',
-        component: Reward
+        path: '/rewards',
+        name: 'Rewards',
+        component: Rewards
     },
     {
         path: '/signIn',
@@ -49,6 +50,11 @@ const routes = [
         path: '/editQuestion',
         name: 'EditQuestion',
         component: EditQuestion
+    },
+    {
+        path: '/editReward',
+        name: 'EditReward',
+        component: EditReward
     },
     {
         path: '/quiz',

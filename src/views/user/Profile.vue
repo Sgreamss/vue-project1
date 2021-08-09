@@ -1,14 +1,14 @@
 <template>
     <div>
-        <score></score>
+        <info></info>
     </div>
 </template>
 
 <script>
-import Score from '../components/Score.vue'
+import Info from '../../components/user/Info.vue'
 export default {
     components: {
-        Score
+        Info
     }
 }
 </script>

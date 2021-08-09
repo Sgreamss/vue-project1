@@ -2,14 +2,17 @@
   <div class="bg">
     <nav class="navbar navbar-expand-lg navbar-dark nav fsize" style="font-family: 'Acme', sans-serif;">
       <div class="container-fluid">
-        <img src="../assets/logo250.png" width="80px" height="80px" alt="logo">
+        <img src="../../assets/logo250.png" width="80px" height="80px" alt="logo">
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/main">Home</a>
+              <a class="nav-link" href="/main">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/profile">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/rewards">Redeem</a>
             </li>
             <button class="pushable" type="submit" @click="logout">
               <span class="front" style="font-family: 'Acme', sans-serif;">LOG OUT</span>
@@ -18,42 +21,36 @@
         </div>
       </div>
     </nav>
-    <div>
-    <h1 class="hFont" style="font-family: 'Acme', sans-serif;" >
-      CHOOSE THE TOPIC OF THE QUESTIONS
-    </h1>
-    <div class="libBlock" v-for="tp in topics" :key="tp.id">
-      <div class="item">
-          <div class="bf">
-              <div class="ifont">
-                    {{ tp.questions.length }} Questions
-              </div>
-          </div>
-          <div class="but" id="topic">
-              <button class="start" type="start" @click="start(tp.id)" style="font-family: 'Acme', sans-serif;">
-                START
-              </button>
-          </div>
-          <div class="titleBlock">
-              {{tp.title}}
-          </div>
-        </div>
+
+    <div class="block">
+      <div v-for="question in topic.questions" :key="question.id">
+          <h1>
+            {{question.questionText}}
+          </h1>
+            <div class="form-check blockAns" v-for="ans in question.answerOptions" :key="ans.id">
+                <input class="form-check-input" type="radio" :name="question.id" :value="ans.id" v-model="question.selectedAnswer">
+                <label class="form-check-label" for="exampleRadios1">{{ans.answerText}}</label>
+            </div>
       </div>
     </div>
+
+    <button class="pushableS">
+        <span class="frontS" style="font-family: 'Acme', sans-serif;" @click="submit">SUBMIT</span>
+    </button>
   </div>
 </template>
 
 <script>
 import AuthService from '@/services/AuthService'
-// import TopicService from '@/services/TopicService'
-import Topic from '../store/Topic'
+import Topic from '../../store/Topic'
+
 export default {
   data() {
     return {
-      topics: [],
+      topic: [],
+      user: []
     }
   },
-
 
   created() {
     this.fetchTopic()
@@ -61,17 +58,28 @@ export default {
 
   methods:{
     async fetchTopic(){
-      await Topic.dispatch("fetchTopic")
-      this.topics = Topic.getters.topics
+      await Topic.dispatch("fetchTopicById", localStorage.TopicId)
+      this.topic = Topic.getters.topics
     },
 
-    fetchStorage(){
-      this.users = JSON.parse(localStorage.getItem('auth-login'));
-    },
-
-    async start(id){
-      localStorage.TopicId = id;
-      this.$router.push('/quiz')
+    submit(){
+      let score = 0;
+      for(let question of this.topic.questions){
+        let correctedId = -1
+        for(let answer of question.answerOptions){
+          if(answer.isCorrect){
+            correctedId = answer.id
+          }
+        }
+        if(question.selectedAnswer == correctedId){
+          score += 1
+        }
+        console.log(score);
+      }
+      let payload = {
+        point: score
+      }
+      AuthService.update( JSON.parse(localStorage.getItem('auth-login')).user.id, payload)
     },
 
     logout(){
@@ -84,13 +92,13 @@ export default {
             this.$router.push('/')
           }
         })
-    
     },
-  },
+  }
+
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .nav{
     background-color: #5E17EB;
     position: sticky;
@@ -141,20 +149,12 @@ export default {
     box-sizing: border-box;
     margin: 0px;
     min-width: 0px;
-}.titleBlock{
-    background-color: rgb(242, 242, 242);
-    color: rgb(110, 110, 110);
-    margin-left: 2px;
-    padding: 3px;
-    margin-top: 2px;
-    display: flex;
-    box-sizing: border-box;
-    margin: 0px;
-    min-width: 0px;
-    -webkit-box-pack: justify;
-    justify-content: space-between;
-    -webkit-box-align: center;
-    align-items: center;
+}
+.block{
+    padding: 32px 0px 20px 50px;
+}
+.blockAns{
+    padding: 0px 0px 0px 50px;
 }
 .but{
     flex-flow: row-reverse wrap;
@@ -176,6 +176,27 @@ export default {
     line-height: 32px;
     min-width: 80px
 }
+
+.pushableS {
+    border-radius: 12px;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 4px;
+    background-color: #DC7C41;
+    width: 120px;
+    margin-left: 50px;
+}
+.frontS {
+    display: block;
+    padding: 8px 20px;
+    border-radius: 12px;
+    font-size: 1.25rem;
+    color: white ;
+    transform: translateY(-6px);
+    background-color: #FF914D;  
+}
+
 .pushable {
     border-radius: 12px;
     border: none;
@@ -183,7 +204,7 @@ export default {
     cursor: pointer;
     outline-offset: 4px;
     background-color: #DC7C41;
-    width: 8%;
+    width: 120px;
     position: absolute;
     top: 30%;
     right: 10px;
@@ -199,7 +220,8 @@ export default {
     background-color: #FF914D;  
 }
 
-.pushable:active .front {
+.pushable:active .front
+.pushableS:active .frontS {
   transform: translateY(-2px);
 }
 

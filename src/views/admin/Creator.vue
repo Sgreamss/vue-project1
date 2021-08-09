@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Create from '../components/Create.vue'
+import Create from '../../components/admin/Create.vue'
 export default {
     components: {
         Create

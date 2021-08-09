@@ -2,7 +2,7 @@
   <div class="main">
     <nav class="navbar navbar-expand-lg navbar-dark nav fsize" style="font-family: 'Acme', sans-serif;">
       <div class="container-fluid">
-        <img src="../assets/logo250.png" width="80px" height="80px" alt="logo">
+        <img src="../../assets/logo250.png" width="80px" height="80px" alt="logo">
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
@@ -15,7 +15,7 @@
               <a class="nav-link" href="/board">Score board</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/profile">Profile</a>
+              <a class="nav-link" href="/editReward">Reward</a>
             </li>
             <button class="pushableE">
               <span class="frontE" style="font-family: 'Acme', sans-serif;" @click="exit">EXIT</span>
@@ -113,9 +113,9 @@
 </template>
 
 <script>
-import Topic from '../store/Topic'
-import Question from '../store/Question'
-import User from '../store/User'
+import Topic from '../../store/Topic'
+import Question from '../../store/Question'
+import User from '../../store/User'
 export default {
   data() {
     return {

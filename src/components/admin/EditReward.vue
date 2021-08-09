@@ -2,17 +2,17 @@
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark nav fsize" style="font-family: 'Acme', sans-serif;">
       <div class="container-fluid">
-        <img src="../assets/logo250.png" width="80px" height="80px" alt="logo">
+        <img src="../../assets/logo250.png" width="80px" height="80px" alt="logo">
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link" href="/main">Home</a>
             </li>
-              <li class="nav-item">
-              <a class="nav-link" href="/creator">Create</a>
+            <li class="nav-item">
+              <a class="nav-link" href="/profile">Profile</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
+              <a class="nav-link active" aria-current="page" href="/editReward">Reward</a>
             </li>
             <button class="pushable" type="submit" @click="logout">
               <span class="front" style="font-family: 'Acme', sans-serif;">LOG OUT</span>
@@ -21,29 +21,56 @@
         </div>
       </div>
     </nav>
-    <div >
-      <p>Username : {{ users.username }}</p>
-      <p>Email    : {{ users.email }}</p>
-      <p>Point    : {{ users.point }}</p>
+    <div>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th class="fhead">Item</th>
+            <th class="fhead">Point</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(n, index) in rewards" :key="index">
+            <td>
+              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">{{ n.name }}
+            </td>
+            <td v-if="index !== selected">{{  n.point }}</td>
+            <td v-if="index === selected">
+            </td>  
+          </tr>
+        </tbody>
+        You total points : {{me.user.point}}
+        <br>
+        <button type="button" class="btn btn-outline-warning bsize">Redeem</button>
+      </table>
     </div>
   </div>
 </template>
 
 <script>
 import AuthService from '@/services/AuthService'
+import Reward from '../../store/Reward'
 export default {
   data(){
     return{
-      users:null
+      userRole: JSON.parse(localStorage.getItem('auth-login')).user.role.name,
+      rewards:null,
+      me:null,
+      selected:-1,
     }
   },
-  created(){
-    this.fetchStorage()
+  created() {
+    this.fetchReward()
+    this.getStorage()
   },
   
   methods:{
-    fetchStorage(){
-      this.users = JSON.parse(localStorage.getItem('auth-login'));
+    async fetchReward(){
+      await Reward.dispatch("fetchReward")
+      this.rewards = Reward.getters.rewards
+    },
+    getStorage(){
+      this.me = JSON.parse(localStorage.getItem('auth-login'));
     },
     logout(){
       
@@ -63,14 +90,27 @@ export default {
 </script>
 
 <style scoped>
+
+.styled-table {
+    margin: 25px 0;
+    min-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
 .nav{
     background-color: #5E17EB;
     position: sticky;
     top: 0;
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 5%), inset 0 -1px 0 rgb(0 0 0 / 15%);
 }
+.fhead{
+    font-size: 40px;
+}
 .fsize{
     font-size: 25px;
+}
+.bsize{
+    width: 150px;
 }
 .header{
     display: inline-block;
@@ -85,7 +125,7 @@ export default {
     cursor: pointer;
     outline-offset: 4px;
     background-color: #DC7C41;
-    width: 8%;
+    width: 120px;
     position: absolute;
     top: 30%;
     right: 10px;

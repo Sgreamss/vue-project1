@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Admin from '../components/Administrator.vue'
+import Admin from '../../components/admin/Administrator.vue'
 export default {
     components: {
         Admin
