@@ -6,7 +6,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="/main">Home</a>
+              <a class="nav-link" :href="users.user.id === 2 ? '/admin' : '/main'">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/board">Score Board</a>
