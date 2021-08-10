@@ -14,9 +14,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/board">Score board</a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" href="/editReward">Reward</a>
-            </li>
+            </li> -->
             <button class="pushable" type="submit" @click="logout">
               <span class="front" style="font-family: 'Acme', sans-serif;">LOG OUT</span>
             </button>
