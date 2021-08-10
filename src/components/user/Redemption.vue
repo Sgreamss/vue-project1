@@ -38,7 +38,7 @@
               <button class="btn btn-success"  @click="getReward(reward.point,users.point,reward.name,users.username)">แลก</button>
             </td>
           </tr>
-          total point : {{users.point}}
+          <h2>total point : {{users.point}}</h2>
         </tbody>
       </table>
     </div>
@@ -92,6 +92,10 @@ export default {
       //console.log(user.user.username);
       let Int1 = parseInt(points)
       let Int2 = parseInt(id)
+      if(Int1 < Int2){
+        this.$swal("Not enough point","Please check you point","error")
+        return;
+      }
       let setpoint = {
         point: Int1-Int2
       }
