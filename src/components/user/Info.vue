@@ -9,7 +9,7 @@
               <a class="nav-link" href="/main">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
+              <a class="nav-link active" aria-current="page" href="/profile">History</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/rewards">Redeem</a>
@@ -23,29 +23,43 @@
     </nav>
     <div>
       <h2>Username : {{ user.user.username }}</h2>
-      <h2>Email    : {{ user.user.email }}</h2>
-      <h2>Point    : {{ index.point }}</h2>
-      <p>History   : {{ index.history}}</p>
-    
     </div>
+    <table class="table my-3">
+        <thead>
+          <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Item</th>
+            <th scope="col">Date</th>
+          </tr>
+        </thead>
+          <tr v-for="u in history" :key="u.id"> 
+            <td > {{u.username}} </td>
+            <td > {{u.name}} </td>
+            <td >{{u.created_at}}  </td>
+          </tr>
+      </table>
   </div>
 </template>
 
 <script>
 import User from '../../store/User'
 import AuthService from '@/services/AuthService'
+import History from '../../store/History'
 export default {
   data(){
     return{
       user : null,
       users : null,
       index : 0 ,
+      history: null,
+      inde : 0,
     }
   },
   created(){
     this.fetchStorage()
     this.fetchUser()
     this.fetchUserByID()
+    this.fetchHistory()
   },
   
   methods:{
@@ -56,9 +70,14 @@ export default {
       await User.dispatch("fetchUser")
       this.users = User.getters.users
     },
+    async fetchHistory(){
+      await History.dispatch("fetchHistory")
+      this.history = History.getters.historys
+    },
     async fetchUserByID(){
       await User.dispatch("fetchUserByID",JSON.parse(localStorage.getItem('auth-login')).user.id)
       this.index = User.getters.users
+      this.inde = JSON.parse(localStorage.getItem('auth-login')).user.id
     },
 
     logout(){

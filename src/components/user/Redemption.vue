@@ -9,7 +9,7 @@
               <a class="nav-link" href="/main">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/profile">Profile</a>
+              <a class="nav-link" href="/profile">History</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/rewards">Redeem</a>
@@ -35,7 +35,7 @@
             <td>{{ reward.name }}</td>
             <td>{{ reward.point }}</td>
             <td>
-              <button class="btn btn-success"  @click="getReward(reward.point,users.point,reward.name)">แลก</button>
+              <button class="btn btn-success"  @click="getReward(reward.point,users.point,reward.name,users.username)">แลก</button>
             </td>
           </tr>
           total point : {{users.point}}
@@ -77,7 +77,7 @@ export default {
       this.rewards = Reward.getters.rewards
     },
     async fetchUser(){
-      await User.dispatch("fetchUserByID",4)
+      await User.dispatch("fetchUserByID",JSON.parse(localStorage.getItem('auth-login')).user.id)
       this.users = User.getters.users
     },
   
@@ -87,7 +87,7 @@ export default {
     submit(){
 
     },
-    async getReward(id,points,name) {
+    async getReward(id,points,name,usernames) {
     
       //console.log(user.user.username);
       let Int1 = parseInt(points)
@@ -96,11 +96,12 @@ export default {
         point: Int1-Int2
       }
       let setHistory = {
-        history: name
-      }
+            "name" : name,
+            "username": usernames
+        }
       console.log(setpoint)
       axios.put("http://localhost:1337/users/" + JSON.parse(localStorage.getItem('auth-login')).user.id, setpoint)
-      axios.put("http://localhost:1337/users/" + JSON.parse(localStorage.getItem('auth-login')).user.id, setHistory)
+      axios.post("http://localhost:1337/histories/",setHistory )
 
       this.fetchUser()
     },

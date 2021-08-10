@@ -9,7 +9,7 @@
               <a class="nav-link" href="/main">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/profile">Profile</a>
+              <a class="nav-link" href="/profile">History</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/rewards">Redeem</a>
