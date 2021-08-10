@@ -25,23 +25,22 @@
       </div>
     </nav>
     <div>
-    <table class="styled-table" style="font-family: 'Acme', sans-serif;">
+    <table class="table table-light">
       <thead>
         <tr>
             <th>
               <button class="btn btn-primary" type="submit" @click="descending()">🔼</button>
-            </th>
-            <th>
               <button class="btn btn-primary" type="submit" @click="ascending()">🔽</button>
             </th>
+            
             <th class="fhead">Username</th>
             <th class="fhead">Score</th>
         </tr>
       </thead>
       <tbody v-for="(n, index) in users" :key="index">
         <tr v-if="n.role.name !== 'Admin'">
-            <td></td>
-            <td></td>
+            <th scope="row">{{ index + 1 }}</th>
+            
             <td>{{ n.username }}</td>
             <td>{{ n.point }}</td>
         </tr>
@@ -135,7 +134,7 @@ export default {
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 5%), inset 0 -1px 0 rgb(0 0 0 / 15%);
 }
 .fhead{
-    font-size: 40px;
+    font-size: 30px;
 }
 .fsize{
     font-size: 25px;
