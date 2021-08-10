@@ -23,9 +23,9 @@
     </nav>
 
     <div class="block">
-      <div v-for="question in topic.questions" :key="question.id">
-          <h1>
-            {{question.questionText}}
+      <div v-for="(question, index) in topic.questions" :key="index">
+          <h1 class="fsize">
+            {{ index + 1 }}) {{question.questionText}}
           </h1>
             <div class="form-check blockAns" v-for="ans in question.answerOptions" :key="ans.id">
                 <input class="form-check-input" type="radio" :name="question.id" :value="ans.id" v-model="question.selectedAnswer">
@@ -109,6 +109,7 @@ export default {
 }
 .bg{
   background-color: #EEEEEE;
+  height: 100%;
 }
 .fsize{
     font-size: 25px;
@@ -156,7 +157,7 @@ export default {
     padding: 32px 0px 20px 50px;
 }
 .blockAns{
-    padding: 0px 0px 0px 50px;
+    padding: 0px 0px 0px 30px;
 }
 .but{
     flex-flow: row-reverse wrap;
