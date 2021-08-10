@@ -21,29 +21,44 @@
         </div>
       </div>
     </nav>
-    <div >
-      <p>Username : {{ user.user.username }}</p>
-      <p>Email    : {{ user.user.email }}</p>
-      <p>Point    : {{ user.user.point }}</p>
+    <div>
+      <h2>Username : {{ user.user.username }}</h2>
+      <h2>Email    : {{ user.user.email }}</h2>
+      <h2>Point    : {{ index.point }}</h2>
+      <p>History   : {{ index.history}}</p>
+    
     </div>
   </div>
 </template>
 
 <script>
+import User from '../../store/User'
 import AuthService from '@/services/AuthService'
 export default {
   data(){
     return{
-      user : null
+      user : null,
+      users : null,
+      index : 0 ,
     }
   },
   created(){
     this.fetchStorage()
+    this.fetchUser()
+    this.fetchUserByID()
   },
   
   methods:{
     fetchStorage(){
       this.user = JSON.parse(localStorage.getItem('auth-login'));
+    },
+    async fetchUser(){
+      await User.dispatch("fetchUser")
+      this.users = User.getters.users
+    },
+    async fetchUserByID(){
+      await User.dispatch("fetchUserByID",JSON.parse(localStorage.getItem('auth-login')).user.id)
+      this.index = User.getters.users
     },
 
     logout(){
@@ -62,6 +77,7 @@ export default {
 </script>
 
 <style scoped>
+.h2 { color: #111; font-family: 'Open Sans', sans-serif; font-size: 30px; font-weight: 300; line-height: 32px; margin: 0 0 72px; text-align: center; }
 .nav{
     background-color: #5E17EB;
     position: sticky;

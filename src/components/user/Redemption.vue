@@ -22,32 +22,32 @@
       </div>
     </nav>
     <div>
-      <table class="styled-table">
+      <table class="table my-3">
         <thead>
           <tr>
-            <th class="fhead">Item</th>
-            <th class="fhead">Point</th>
+            <th scope="col">Name</th>
+            <th scope="col">Point</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(n, index) in rewards" :key="index">
+          <tr v-for="reward in rewards" :key="reward.id">
+      
+            <td>{{ reward.name }}</td>
+            <td>{{ reward.point }}</td>
             <td>
-              <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">{{ n.name }}
+              <button class="btn btn-success"  @click="getReward(reward.point,users.point,reward.name)">แลก</button>
             </td>
-            <td v-if="index !== selected">{{  n.point }}</td>
-            <td v-if="index === selected">
-            </td>  
           </tr>
+          total point : {{users.point}}
         </tbody>
-        You total points : {{me.user.point}}
-        <br>
-        <button type="button" class="btn btn-outline-warning bsize">Redeem</button>
       </table>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import User from '../../store/User'
 import AuthService from '@/services/AuthService'
 import Reward from '../../store/Reward'
 export default {
@@ -57,11 +57,17 @@ export default {
       rewards:null,
       me:null,
       selected:-1,
+      userId: JSON.parse(localStorage.getItem('auth-login')).user.id,
+      users : null,
+      byId:null,
     }
   },
+  
+  
   created() {
     this.fetchReward()
     this.getStorage()
+    this.fetchUser()
   },
   
 
@@ -70,9 +76,35 @@ export default {
       await Reward.dispatch("fetchReward")
       this.rewards = Reward.getters.rewards
     },
+    async fetchUser(){
+      await User.dispatch("fetchUserByID",4)
+      this.users = User.getters.users
+    },
+  
     getStorage(){
       this.me = JSON.parse(localStorage.getItem('auth-login'));
     },
+    submit(){
+
+    },
+    async getReward(id,points,name) {
+    
+      //console.log(user.user.username);
+      let Int1 = parseInt(points)
+      let Int2 = parseInt(id)
+      let setpoint = {
+        point: Int1-Int2
+      }
+      let setHistory = {
+        history: name
+      }
+      console.log(setpoint)
+      axios.put("http://localhost:1337/users/" + JSON.parse(localStorage.getItem('auth-login')).user.id, setpoint)
+      axios.put("http://localhost:1337/users/" + JSON.parse(localStorage.getItem('auth-login')).user.id, setHistory)
+
+      this.fetchUser()
+    },
+    
     logout(){
       
       this.$swal("You really wanna leave?",":(",{ icon:"warning",buttons:{cancel:"Nooo",Yes:true}, }).then(

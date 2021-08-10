@@ -18,19 +18,37 @@ export default new Vuex.Store({
     mutations: {
         fetch(state, {res}) {
             state.data = res.data
+        },
+        add(state, {payload}) {
+            state.data.push(payload)
         }
     },
 
     actions: {
         async fetchUser({commit}) {
-            let res = await Axios.get(api_endpoint + "/users", {
+            let res = await Axios.get(api_endpoint + "/users/" , {
                 headers: {
                     'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('auth-login')).jwt
                 }
             })
             console.log('axi ' + res);
             commit("fetch", {res})
-        }
+        },
+        async addHistory({commit}, payload){
+            let res = await Axios.post(api_endpoint + "/users", payload)
+            console.log('axi ' + res);
+            commit("add", {payload})
+        },
 
+        async fetchUserByID({commit}, id) {
+        let res = await Axios.get(api_endpoint + "/users/" + id ,{
+            headers: {
+                'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('auth-login')).jwt
+            }
+        })
+        console.log('axi ' + res);
+        commit("fetch", {res})
     },
+},
+
 })
